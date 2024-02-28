@@ -1,9 +1,14 @@
 <?php
 
+global $conn;
+
 include("db/config.php");
 
 $sql = "SELECT id, name FROM regions";
 $region_result = $conn->query($sql);
+
+$sql = "SELECT id, name FROM presidential_candidates ORDER BY name ASC";
+$candidates_result = $conn->query($sql);
 
 ?>
 <!doctype html>
@@ -41,10 +46,11 @@ $region_result = $conn->query($sql);
                 </div>
                 <div class="mb-3">
                     <label for="region" class="form-label">Región</label>
-                    <select class="form-control" name="region" id="region" required>
+                    <select class="form-control" name="region" id="region" onchange="selectCommune()" required>
+                        <option value="">-- Selecciona una region --</option>
                         <?php
                         while ($row = $region_result->fetch_assoc()) {
-                            print '<option value="' . $row['id'] . '">' . $row['Name'] . '</option>';
+                            print '<option value="' . $row['id'] . '">' . $row['name'] . '</option>';
                         }
                         ?>
                     </select>
@@ -52,13 +58,18 @@ $region_result = $conn->query($sql);
                 <div class="mb-3">
                     <label for="comuna" class="form-label">Comuna</label>
                     <select class="form-control" name="comuna" id="comuna" required disabled>
-                        <option value="1">Nose</option>
+                        <option value="">No hay comunas disponibles</option>
                     </select>
                 </div>
                 <div class="mb-3">
                     <label for="candidato" class="form-label">Candidato</label>
                     <select class="form-control" name="candidato" id="candidato" required>
-                        <option value="1">Nose</option>
+                        <option value="">-- Selecciona un candidato(a) --</option>
+                        <?php
+                        while ($row = $candidates_result->fetch_assoc()) {
+                            print '<option value="' . $row['id'] . '">' . $row['name'] . '</option>';
+                        }
+                        ?>
                     </select>
                 </div>
                 <div class="mb-3">
@@ -98,6 +109,36 @@ $region_result = $conn->query($sql);
         $(this).val("");
     });
 
+    function selectCommune() {
+        // Obtener el valor seleccionado de la región
+        var regionSeleccionada = $('#region').val();
+
+        // Realizar la petición AJAX
+        $.ajax({
+            type: 'GET',
+            url: 'src/search_communes.php',
+            data: { region: regionSeleccionada },
+            dataType: 'json',
+            success: function(communes) {
+                var communeSelect = $('#comuna');
+                communeSelect.empty();
+                if (communes.length > 0) {
+                    communeSelect.removeAttr("disabled");
+                    communeSelect.append('<option value="">-- Selecciona una comuna --</option>');
+
+                    communes.forEach(function(comuna) {
+                        communeSelect.append('<option value="' + comuna['id'] + '">' + comuna['name'] + '</option>');
+                    });
+                } else {
+                    communeSelect.append('<option value="">No hay comunas disponibles</option>');
+                }
+            },
+            error: function(xhr, status, error) {
+                console.error("Error en la petición AJAX:", status, error);
+            }
+        });
+    }
+
     function validateForm() {
         var checkboxes = document.querySelectorAll('input[name="como_se_entero[]"]:checked');
         if (checkboxes.length < 2) {
@@ -126,3 +167,7 @@ $region_result = $conn->query($sql);
 </script>
 </body>
 </html>
+<?php
+
+// Cerrar la conexión a la base de datos
+$conn->close();
