@@ -98,6 +98,7 @@ $candidates_result = $conn->query($sql);
         </div>
     </div>
 </div>
+<div class="float-start ms-3" id="alertContainer"></div>
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 <script src="public/js/jquery.rut.min.js"></script>
@@ -151,13 +152,29 @@ $candidates_result = $conn->query($sql);
 
     function sendForm() {
         var form = $('#formToVote');
+        var alertContainer = $('#alertContainer'); // El contenedor donde mostrarás las alertas
+        var communeSelect = $('#comuna');
+
 
         $.ajax({
             type: 'POST',
             url: 'src/save_vote.php',
             data: form.serialize(),
             success: function(response) {
-                console.log(response);
+                // Crear una alerta de éxito
+                var successAlert = '<div class="alert alert-success alert-dismissible fade show" role="alert">' +
+                    'La votación se guardó exitosamente.' +
+                    '<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>' +
+                    '</div>';
+
+                // Mostrar la alerta en el contenedor
+                alertContainer.html(successAlert);
+
+                form.trigger("reset");
+
+                communeSelect.empty();
+                communeSelect.attr("disabled", "disabled");
+                communeSelect.append('<option value="">No hay comunas disponibles</option>');
             },
             error: function(xhr, status, error) {
                 console.error("Error en la peticion AJAX:", status, error);
