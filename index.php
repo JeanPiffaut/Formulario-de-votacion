@@ -158,6 +158,9 @@ $candidates_result = $conn->query($sql);
             data: form.serialize(),
             success: function(response) {
                 console.log(response);
+            },
+            error: function(xhr, status, error) {
+                console.error("Error en la peticion AJAX:", status, error);
             }
         });
     }
