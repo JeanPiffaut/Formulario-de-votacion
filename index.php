@@ -26,7 +26,7 @@ $candidates_result = $conn->query($sql);
     <div class="card">
         <div class="card-body">
             <h1 class="mb-4">Formulario de Votación</h1>
-            <form action="/procesar_formulario" id="formToVote" method="post" onsubmit="if(validateForm()) {sendForm();}return false;">
+            <form action="/procesar_formulario" id="formToVote" method="post" onsubmit="if(confirm('¿Estas seguro de enviar tu votación?')) {if(validateForm()) {sendForm();}}return false;">
                 <div class="mb-3">
                     <label for="name" class="form-label">Nombre y Apellido</label>
                     <input type="text" class="form-control" id="name" name="name" required>
@@ -98,7 +98,7 @@ $candidates_result = $conn->query($sql);
         </div>
     </div>
 </div>
-<div class="float-start ms-3" id="alertContainer"></div>
+<div class="bottom-0 ms-3 position-absolute" id="alertContainer"></div>
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 <script src="public/js/jquery.rut.min.js"></script>
