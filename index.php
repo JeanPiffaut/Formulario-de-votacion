@@ -140,7 +140,7 @@ $candidates_result = $conn->query($sql);
     }
 
     function validateForm() {
-        var checkboxes = document.querySelectorAll('input[name="como_se_entero[]"]:checked');
+        var checkboxes = $("input[name='como_se_entero[]']:checked");
         if (checkboxes.length < 2) {
             alert("Seleccione al menos 2 opciones en 'Cómo se enteró de nosotros'");
             return false;
