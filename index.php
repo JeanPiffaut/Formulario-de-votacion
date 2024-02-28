@@ -28,8 +28,8 @@ $candidates_result = $conn->query($sql);
             <h1 class="mb-4">Formulario de Registro</h1>
             <form action="/procesar_formulario" id="formToVote" method="post" onsubmit="if(validateForm()) {sendForm();}return false;">
                 <div class="mb-3">
-                    <label for="nombre" class="form-label">Nombre y Apellido</label>
-                    <input type="text" class="form-control" id="nombre" name="nombre" required>
+                    <label for="name" class="form-label">Nombre y Apellido</label>
+                    <input type="text" class="form-control" id="name" name="name" required>
                 </div>
                 <div class="mb-3">
                     <label for="alias" class="form-label">Alias</label>
@@ -110,10 +110,8 @@ $candidates_result = $conn->query($sql);
     });
 
     function selectCommune() {
-        // Obtener el valor seleccionado de la región
         var regionSeleccionada = $('#region').val();
 
-        // Realizar la petición AJAX
         $.ajax({
             type: 'GET',
             url: 'src/search_communes.php',
@@ -122,19 +120,21 @@ $candidates_result = $conn->query($sql);
             success: function(communes) {
                 var communeSelect = $('#comuna');
                 communeSelect.empty();
+                communeSelect.removeAttr("disabled");
+
                 if (communes.length > 0) {
-                    communeSelect.removeAttr("disabled");
                     communeSelect.append('<option value="">-- Selecciona una comuna --</option>');
 
                     communes.forEach(function(comuna) {
                         communeSelect.append('<option value="' + comuna['id'] + '">' + comuna['name'] + '</option>');
                     });
                 } else {
+                    communeSelect.attr("disabled", "disabled");
                     communeSelect.append('<option value="">No hay comunas disponibles</option>');
                 }
             },
             error: function(xhr, status, error) {
-                console.error("Error en la petición AJAX:", status, error);
+                console.error("Error en la peticion AJAX:", status, error);
             }
         });
     }
@@ -157,10 +157,7 @@ $candidates_result = $conn->query($sql);
             url: 'src/save_vote.php',
             data: form.serialize(),
             success: function(response) {
-                // Manejar la respuesta del servidor aquí (en este caso, response es el script)
                 console.log(response);
-                // Puedes ejecutar el script si es necesario
-                // eval(response);
             }
         });
     }
