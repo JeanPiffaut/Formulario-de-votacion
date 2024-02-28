@@ -92,7 +92,7 @@ $candidates_result = $conn->query($sql);
                     </div>
                 </div>
                 <div class="text-end">
-                    <button type="submit" class="btn btn-success">Enviar</button>
+                    <button type="submit" class="btn btn-success">Votar</button>
                 </div>
             </form>
         </div>
