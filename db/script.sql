@@ -17,6 +17,13 @@ create table vote_db.communes
         foreign key (region_id) references vote_db.regions (id) on update cascade
 );
 
+create table if not exists vote_db.presidential_candidates
+(
+    id   int auto_increment
+        primary key,
+    name varchar(255) not null
+);
+
 create index region_id
     on vote_db.communes (region_id);
 
@@ -383,3 +390,11 @@ INSERT INTO vote_db.communes (id, name, region_id) VALUES (343, 'El Monte', 1);
 INSERT INTO vote_db.communes (id, name, region_id) VALUES (344, 'Isla de Maipo', 1);
 INSERT INTO vote_db.communes (id, name, region_id) VALUES (345, 'Padre Hurtado', 1);
 INSERT INTO vote_db.communes (id, name, region_id) VALUES (346, 'Peñaflor', 1);
+
+INSERT INTO vote_db.presidential_candidates (id, name) VALUES (1, 'Gabriel Boric');
+INSERT INTO vote_db.presidential_candidates (id, name) VALUES (2, 'José Antonio Kast');
+INSERT INTO vote_db.presidential_candidates (id, name) VALUES (3, 'Yasna Provoste');
+INSERT INTO vote_db.presidential_candidates (id, name) VALUES (4, 'Sebastián Sichel');
+INSERT INTO vote_db.presidential_candidates (id, name) VALUES (5, 'Eduardo Artés');
+INSERT INTO vote_db.presidential_candidates (id, name) VALUES (6, 'Marco Enríquez-Ominami');
+INSERT INTO vote_db.presidential_candidates (id, name) VALUES (7, 'Franco Parisi Fernández');
