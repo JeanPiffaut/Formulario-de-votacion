@@ -1,5 +1,5 @@
 # Utilizamos una imagen base de PHP 8
-FROM php:8.2
+FROM php:8.1
 
 # Actualizamos los paquetes e instalamos extensiones de PHP necesarias
 RUN apt-get update && \
