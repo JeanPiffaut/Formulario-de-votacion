@@ -1,3 +1,11 @@
+<?php
+
+include("db/config.php");
+
+$sql = "SELECT id, name FROM regions";
+$region_result = $conn->query($sql);
+
+?>
 <!doctype html>
 <html lang="es">
 <head>
@@ -13,7 +21,7 @@
     <div class="card">
         <div class="card-body">
             <h1 class="mb-4">Formulario de Registro</h1>
-            <form action="/procesar_formulario" method="post" onsubmit="return validarFormulario()">
+            <form action="/procesar_formulario" id="formToVote" method="post" onsubmit="if(validateForm()) {sendForm();}return false;">
                 <div class="mb-3">
                     <label for="nombre" class="form-label">Nombre y Apellido</label>
                     <input type="text" class="form-control" id="nombre" name="nombre" required>
@@ -34,7 +42,11 @@
                 <div class="mb-3">
                     <label for="region" class="form-label">Región</label>
                     <select class="form-control" name="region" id="region" required>
-                        <option value="1">Nose</option>
+                        <?php
+                        while ($row = $region_result->fetch_assoc()) {
+                            print '<option value="' . $row['id'] . '">' . $row['Name'] . '</option>';
+                        }
+                        ?>
                     </select>
                 </div>
                 <div class="mb-3">
@@ -86,7 +98,7 @@
         $(this).val("");
     });
 
-    function validarFormulario() {
+    function validateForm() {
         var checkboxes = document.querySelectorAll('input[name="como_se_entero[]"]:checked');
         if (checkboxes.length < 2) {
             alert("Seleccione al menos 2 opciones en 'Cómo se enteró de nosotros'");
@@ -94,6 +106,22 @@
 
         }
         return true;
+    }
+
+    function sendForm() {
+        var form = $('#formToVote');
+
+        $.ajax({
+            type: 'POST',
+            url: 'src/save_vote.php',
+            data: form.serialize(),
+            success: function(response) {
+                // Manejar la respuesta del servidor aquí (en este caso, response es el script)
+                console.log(response);
+                // Puedes ejecutar el script si es necesario
+                // eval(response);
+            }
+        });
     }
 </script>
 </body>
