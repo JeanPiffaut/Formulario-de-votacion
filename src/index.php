@@ -145,7 +145,6 @@ $candidates_result = $conn->query($sql);
         if (checkboxes.length < 2) {
             alert("Seleccione al menos 2 opciones en 'Cómo se enteró de nosotros'");
             return false;
-
         }
         return true;
     }
@@ -161,20 +160,36 @@ $candidates_result = $conn->query($sql);
             url: 'save_vote.php',
             data: form.serialize(),
             success: function(response) {
-                // Crear una alerta de éxito
-                var successAlert = '<div class="alert alert-success alert-dismissible fade show" role="alert">' +
-                    'La votación se guardó exitosamente.' +
-                    '<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>' +
-                    '</div>';
+                if (response['success'] == true) {
+                    // Crear una alerta de éxito
+                    var successAlert = '<div class="alert alert-success alert-dismissible fade show" role="alert">' +
+                        'La votación se guardó exitosamente.' +
+                        '<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>' +
+                        '</div>';
 
-                // Mostrar la alerta en el contenedor
-                alertContainer.html(successAlert);
+                    // Mostrar la alerta en el contenedor
+                    alertContainer.html(successAlert);
 
-                form.trigger("reset");
+                    form.trigger("reset");
 
-                communeSelect.empty();
-                communeSelect.attr("disabled", "disabled");
-                communeSelect.append('<option value="">No hay comunas disponibles</option>');
+                    communeSelect.empty();
+                    communeSelect.attr("disabled", "disabled");
+                    communeSelect.append('<option value="">No hay comunas disponibles</option>');
+                } else {
+                    var alertas = "";
+                    response['error'].forEach(function(elemento) {
+                        alertas += '<li>' + elemento + '</li>';
+                    });
+
+                    // Crear una alerta de error
+                    var successAlert = '<div class="alert alert-danger alert-dismissible fade show" role="alert"><ul>' +
+                        alertas +
+                        '</ul><button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>' +
+                        '</div>';
+
+                    // Mostrar la alerta en el contenedor
+                    alertContainer.html(successAlert);
+                }
             },
             error: function(xhr, status, error) {
                 console.error("Error en la peticion AJAX:", status, error);
