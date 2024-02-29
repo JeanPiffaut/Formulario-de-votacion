@@ -1,9 +1,5 @@
 # Formulario de votación
 
-## Requerimientos
-- PHP 8.1
-- MySQL 5.7.24
-
 ## Instalar el ambiente de desarrollo
 
 La instalación se hace en línea de comandos ubicada en la carpeta rais del proyecto:
