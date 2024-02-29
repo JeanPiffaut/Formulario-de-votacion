@@ -24,8 +24,40 @@ create table if not exists vote_db.presidential_candidates
     name varchar(255) not null
 );
 
+create table vote_db.votes
+(
+    id           int auto_increment
+        primary key,
+    name         varchar(255) not null,
+    alias        varchar(255) not null,
+    rut          varchar(20)  not null,
+    email        varchar(255) not null,
+    commune_id   int          null,
+    region_id    int          null,
+    candidate_id int          null,
+    web          tinyint(1)   null,
+    tv           tinyint(1)   null,
+    social_media tinyint(1)   null,
+    friend       tinyint(1)   null,
+    constraint votes_ibfk_1
+        foreign key (commune_id) references vote_db.communes (id),
+    constraint votes_ibfk_2
+        foreign key (region_id) references vote_db.regions (id),
+    constraint votes_ibfk_3
+        foreign key (candidate_id) references vote_db.presidential_candidates (id)
+);
+
 create index region_id
     on vote_db.communes (region_id);
+
+create index candidate_id
+    on vote_db.votes (candidate_id);
+
+create index commune_id
+    on vote_db.votes (commune_id);
+
+create index region_id
+    on vote_db.votes (region_id);
 
 INSERT INTO vote_db.regions (id, name) VALUES (1, 'Región Metropolitana de Santiago');
 INSERT INTO vote_db.regions (id, name) VALUES (2, 'Arica y Parinacota');
