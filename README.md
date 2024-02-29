@@ -4,10 +4,33 @@
 - PHP 8.1
 - MySQL 5.7.24
 
-## Instalación
-En el servidor de MySQL, se debe ejecutar el archivo script.sql que se encuentra en la carpeta db. Este contiene todo 
-el script para la creación de las tablas y carga de datos tales como Regiones, Comuna y Candidatos Presidenciales.
+## Instalar el ambiente de desarrollo
 
-Se debe definir en config.php los accesos necesarios para la conexión con la base de datos.
+La instalación se hace en línea de comandos ubicada en la carpeta rais del proyecto:
 
-Ya con esto configurado sera posible el uso del formulario de votación
+```zsh
+docker-compose up -d
+```
+
+## Comandos disponibles
+
+Una vez instalado, se pueden utilizar los siguientes comandos:
+
+```zsh
+docker-compose start    # Iniciar el ambiente de desarrollo
+docker-compose stop     # Detener el ambiente de desarrollo
+docker-compose down     # Detener y eliminar el ambiente de desarrollo.
+```
+
+## Estructura de Archivos
+
+* `/docker` contiene los archivos de configuración de Docker.
+* `/src` carpeta para los archivos PHP del proyecto.
+
+## Accesos
+
+### Web
+Se seleccionó el puerto 81, con el fin de que no se tope con los puertos usualmente usados localmente.
+* http://localhost:81/
+
+Este se puede modificar en el archivo `.env`
