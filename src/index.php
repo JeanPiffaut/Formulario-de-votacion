@@ -115,7 +115,7 @@ $candidates_result = $conn->query($sql);
 
         $.ajax({
             type: 'GET',
-            url: 'src/search_communes.php',
+            url: 'search_communes.php',
             data: { region: regionSeleccionada },
             dataType: 'json',
             success: function(communes) {
@@ -158,7 +158,7 @@ $candidates_result = $conn->query($sql);
 
         $.ajax({
             type: 'POST',
-            url: 'src/save_vote.php',
+            url: 'save_vote.php',
             data: form.serialize(),
             success: function(response) {
                 // Crear una alerta de éxito
