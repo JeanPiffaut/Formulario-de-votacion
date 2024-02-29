@@ -3,7 +3,7 @@
 global $conn;
 
 // Incluir el archivo de configuración
-include("../db/config.php");
+include("config.php");
 
 // Verificar si se ha recibido la región como parámetro
 if (isset($_GET['region'])) {

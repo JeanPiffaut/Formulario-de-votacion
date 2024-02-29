@@ -41,7 +41,7 @@ if (!empty($response)) {
 }
 
 // Incluir el archivo de configuración
-include("../db/config.php");
+include("config.php");
 
 // Buscamos la region para validar
 $sql = "SELECT id FROM regions WHERE id = ?";

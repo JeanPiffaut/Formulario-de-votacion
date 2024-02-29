@@ -2,7 +2,7 @@
 
 global $conn;
 
-include("db/config.php");
+include("config.php");
 
 $sql = "SELECT id, name FROM regions";
 $region_result = $conn->query($sql);
