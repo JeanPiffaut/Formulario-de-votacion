@@ -1,7 +1,7 @@
 <?php
 
 // Configuración de la base de datos
-$host = "localhost";
+$host = "172.30.0.2";
 $user = "root2";
 $pass = "root2";
 $db_name = "vote_db";
@@ -16,7 +16,7 @@ try {
     }
 
     // Configurar el conjunto de caracteres a UTF-8
-    $conn->set_charset("utf8");
+    //$conn->set_charset("utf8");
 } catch (Exception $e) {
     die("Error en la configuración de la base de datos. Error: " . $e->getMessage());
 }

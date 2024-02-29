@@ -7,6 +7,9 @@ volumes:
 networks:
   network-id:
     name: ${PROJECT_NAME}-network
+    ipam:
+      config:
+        - subnet: 172.30.0.0/16
 
 services:
   mysql:
@@ -16,9 +19,11 @@ services:
         mysql_version: ${MYSQL_VERSION}
     container_name: ${PROJECT_NAME}-mysql
     environment:
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
       MYSQL_USER: ${MYSQL_USER}
       MYSQL_PASSWORD: ${MYSQL_PASSWORD}
       MYSQL_ROOT_PASSWORD: ${MYSQL_PASSWORD}
+    command: ["--pid-file=/var/run/mysqld/mysqld.pid"]
     volumes:
       - mysql-data:/var/lib/mysql
       - ./src/db:/docker-entrypoint-initdb.d

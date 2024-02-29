@@ -1,5 +1,3 @@
-CREATE DATABASE `vote_db` /*!40100 DEFAULT CHARACTER SET utf8 */;
-
 create table vote_db.regions
 (
     id   int auto_increment
